@@ -13,10 +13,27 @@ import os
 VSCODIUM = 'codium'
 
 # what name do you want to see in the context menu?
-VSCODIUMNAME = 'Codium'
+VSCODIUMNAME = 'VSCodium'
 
 # always create new window?
 NEWWINDOW = False
+
+lang = os.environ.get("LANG")
+label = ""
+if "zh" in lang:
+    label = '在 ' + VSCODIUMNAME + ' 中打开'
+    tip_files = '用 VSCodium 打开所选择的文件'
+    tip_backgroud = '在 VSCodium 中打开当前目录'
+
+elif "tr" in lang:
+    label = VSCODIUMNAME + ' ile aç'
+    tip_files = 'Seçilen dosyaları VSCodium ile açar'
+    tip_backgroud = 'Anlık dizini VSCodium ile açar'
+
+else:
+    label = 'Open in ' + VSCODIUMNAME
+    tip_files = 'Opens the selected files in VSCodium'
+    tip_backgroud = 'Opens the current directory in VSCodium'
 
 
 class VSCodiumExtension(GObject.GObject, Nautilus.MenuProvider):
@@ -40,11 +57,10 @@ class VSCodiumExtension(GObject.GObject, Nautilus.MenuProvider):
         call(VSCODIUM + ' ' + args + safepaths + '&', shell=True)
 
     def get_file_items(self, *args):
-        files = args[-1]
         item = Nautilus.MenuItem(
             name='VSCodiumOpen',
-            label='Open in ' + VSCODIUMNAME,
-            tip='Opens the selected files with VSCodium'
+            label=label,
+            tip=tip_files
         )
         item.connect('activate', self.launch_vscodium, files)
 
@@ -54,8 +70,8 @@ class VSCodiumExtension(GObject.GObject, Nautilus.MenuProvider):
         file_ = args[-1]
         item = Nautilus.MenuItem(
             name='VSCodiumOpenBackground',
-            label='Open in ' + VSCODIUMNAME,
-            tip='Opens the current directory in VSCodium'
+            label=label,
+            tip=tip_files
         )
         item.connect('activate', self.launch_vscodium, [file_])
 
