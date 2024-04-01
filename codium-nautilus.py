@@ -26,7 +26,7 @@ if "zh" in lang:
     tip_backgroud = '在 VSCodium 中打开当前目录'
 
 elif "tr" in lang:
-    label = VSCODIUMNAME + ' ile aç'
+    label = VSCODIUMNAME + '\'da aç'
     tip_files = 'Seçilen dosyaları VSCodium ile açar'
     tip_backgroud = 'Anlık dizini VSCodium ile açar'
 
